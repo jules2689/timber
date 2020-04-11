@@ -1,0 +1,25 @@
+<form action="/" method="get" class="d-flex flex-wrap" style="width: 100%">
+  <input name="log" class="form-control mr-3" style="flex: 2 2" type="text" value="<%= params[:log] %>" placeholder="Type a query" aria-label="Search Query" />
+  <input name="time_range"
+        <% if params[:time_range] %>
+          data-startdate="<%= params[:time_range].split(" - ").first %>"
+          data-enddate="<%= params[:time_range].split(" - ").last %>"
+        <% end %>
+        class="form-control mr-3 js-date-range-picker flex-1"
+        type="text"
+        placeholder="Time Range"
+        aria-label="Time Range" />
+  <select name="application" class="form-select mr-3" aria-label="Select an Application">
+    <option value="">Application</option>
+    <% %w(slack).each do |app| %>
+    <option <% if app == params[:application] %>selected<% end %> value="<%= app %>"><%= app %></option>
+    <% end %>
+  </select>
+  <select name="source" class="form-select mr-3" aria-label="Select a Source">
+    <option value="">Source</option>
+    <% %w(web tunnel).each do |source| %>
+    <option <% if source == params[:source] %>selected<% end %> value="<%= source %>"><%= source %></option>
+    <% end %>
+  </select>
+  <button class="btn" type="submit">Search</button>
+</form>

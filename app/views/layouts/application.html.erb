@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Timber</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= render "layouts/header" %>
+    <div class="p-5">
+      <%= yield %>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,130 @@
+pre {
+  white-space: pre-wrap;       /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: anywhere;       /* Internet Explorer 5.5+ */
+}
+
+@import '@primer/css/support/variables/colors.scss';
+@import './switch';
+
+$ansi-colors: (
+  "ansi-black": (
+    "bg": $bg-black,
+    "fg": $text-black,
+  ),
+  "ansi-red": (
+    "bg": $bg-red,
+    "fg": $text-red,
+  ),
+  "ansi-green": (
+    "bg": $bg-green,
+    "fg": $text-green,
+  ),
+  "ansi-yellow": (
+    "bg": $bg-yellow,
+    "fg": $text-yellow,
+  ),
+  "ansi-blue": (
+    "bg": $bg-blue,
+    "fg": $text-blue,
+  ),
+  "ansi-magenta": (
+    "bg": $bg-pink,
+    "fg": $text-pink,
+  ),
+  "ansi-cyan": (
+    "bg": $bg-green,
+    "fg": $text-green,
+  ),
+  "ansi-white": (
+    "bg": $bg-white,
+    "fg": $bg-white,
+  ),
+  "ansi-bright-black": (
+    "bg": $bg-gray,
+    "fg": $bg-gray-dark,
+  ),
+  "ansi-bright-red": (
+    "bg": $bg-red,
+    "fg": $bg-red,
+  ),
+  "ansi-bright-green": (
+    "bg": $bg-diffstat-added,
+    "fg": $bg-diffstat-added,
+  ),
+  "ansi-bright-yellow": (
+    "bg": $bg-yellow-light,
+    "fg": $bg-yellow-light,
+  ),
+  "ansi-bright-blue": (
+    "bg": $bg-purple,
+    "fg": $bg-purple,
+  ),
+  "ansi-bright-magenta": (
+    "bg": rgb(255, 85, 255),
+    "fg": rgb(255, 85, 255),
+  ),
+  "ansi-bright-cyan": (
+    "fg": rgb(85, 255, 255),
+    "bg": rgb(85, 255, 255),
+  ),
+  "ansi-bright-white": (
+    "fg": $text-yellow,
+    "bg": rgb(255, 255, 25),
+  ),
+);
+
+@each $name, $colors in $ansi-colors {
+  @each $subname, $color in $colors {
+    .#{$name}-#{$subname} {
+      @if $subname == "fg" {
+        color: #{$color};
+      } else {
+        background-color: #{$color};
+      }
+    }
+  }
+}
+
+.ansi-bright-black, .ansi-up {
+  color: $text-gray-dark;
+}
+
+.Label.source-system { background-color: $bg-blue; color: $text-white; }
+.Label.source-web { background-color: $bg-green-light; }
+.Label.app-slack { background-color: $bg-red-light; }
+.Label.app-github { background-color: $purple-400; color: $text-white; }
+.Label.app-tunnel { background-color: $bg-yellow; }
+
+.dark {
+  background-color: $gray-800;
+
+  .Label.source-system { background-color: $blue-700; color: $text-white; }
+  .Label.source-web { background-color: $green-700; }
+  .Label.app-slack { background-color: $red-400; }
+  .Label.app-github { background-color: $purple-400; }
+  .Label.app-tunnel { background-color: $yellow-400; }
+  .Label--gray {
+    background-color: $gray-700;
+    color: $text-white;
+  }
+  .ansi-bright-black, .ansi-up {
+    color: $text-white;
+  }
+  #search-results {
+    color: $text-white;
+    background-color: $gray-900;
+  }
+  .ansi-bright-black-fg {
+    color: $text-white;
+  }
+  .ansi-blue-fg {
+    color: $blue-400;
+  }
+  .Box-row--hover-gray:hover {
+    color: $text-white;
+    background-color: $gray-700;
+  }
+}
