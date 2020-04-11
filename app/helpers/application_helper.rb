@@ -1,7 +1,7 @@
 module ApplicationHelper
   def octicon(*args)
     icon = Octicons::Octicon.new(*args)
-    icon.to_svg
+    icon.to_svg.html_safe
   end
 
   def search_url(modified_params)

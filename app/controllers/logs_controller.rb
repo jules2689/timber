@@ -1,38 +1,7 @@
 class LogsController < ApplicationController
+  include QueryParser
   def index
-    search_params = { size: 1000, sort: [{ timestamp: "desc" }] }
-
-    queries = []
-    queries << { match: { application: params[:application] } } if params[:application].present?
-    queries << { match: { source: params[:source] } } if params[:source].present?
-    queries << { match: { log: params[:log] } } if params[:log].present?
-
-    time_query = nil
-    if params[:time_range]
-      from_time, to_time = params[:time_range].split(" - ")
-      time_query = {
-        range: {
-          "timestamp" => {
-              gte: DateTime.parse(from_time).utc.iso8601[0..-2],
-              lte: DateTime.parse(to_time).utc.iso8601[0..-2]
-          }
-        }
-      }
-    end
-
-    if queries.empty?
-      if time_query.nil?
-        search_params[:query] = { match_all: {} }
-      else
-        search_params[:query] = time_query
-      end
-    else
-      queries << time_query if time_query
-      search_params[:query] = { bool: { must: queries } }
-    end
-
-    # search_params[:filter] = { kv: {} }
-
+    search_params = parse_query(params)
     puts JSON.pretty_generate(search_params)
     @logs = LOG_REPO.search(search_params)
   end

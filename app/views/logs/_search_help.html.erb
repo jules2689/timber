@@ -1,0 +1,33 @@
+<details>
+  <summary aria-haspopup="dialog">Search Help</summary>
+  <div class="Box">
+    <ul>
+      <li class="Box-row">
+        When selected, timestamp, application, and source will <i>always</i> be unioned with the other logic.<br>
+        That is to say, it is equivalent to: <code>application AND source AND timestamp AND (query)</code>
+      </li>
+      <li class="Box-row">
+        Timestamp is <i>always</i> a range. It is inclusive (>= or <= logic is used).
+      </li>
+      <li class="Box-row">
+        Query logic is powered by the simple query parser in Elasticsearch.
+
+        <ul class="pl-5">
+          <li>+ signifies AND operation</li>
+          <li>| signifies OR operation</li>
+          <li>- negates a single token</li>
+          <li>" wraps a number of tokens to signify a phrase for searching</li>
+          <li>* at the end of a term signifies a prefix query</li>
+          <li>( and ) signify precedence</li>
+          <li>~N after a word signifies edit distance (fuzziness)</li>
+          <li>~N after a phrase signifies slop amount</li>
+        </ul>
+
+        <strong>Example:</strong> <code>16451242-a32d-4e22-8b0a-a32b23ecebea -"GitHub::SQL Select" +"Repository Load"</code><br>
+        This would search for logs with the string <code>16451242-a32d-4e22-8b0a-a32b23ecebea</code> and <code>Repository Load</code>, but not <code>GitHub::SQL Select</code>.
+        It is important to remember quotes when dealing with this kind of query.
+      </li>
+    </ul>
+  </div>
+</details>
+

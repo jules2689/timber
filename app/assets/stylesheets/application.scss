@@ -127,4 +127,11 @@ $ansi-colors: (
     color: $text-white;
     background-color: $gray-700;
   }
+  details summary {
+    color: $text-white;
+  }
+  .Box {
+    background-color: $gray-700;
+    color: $text-white;
+  }
 }
