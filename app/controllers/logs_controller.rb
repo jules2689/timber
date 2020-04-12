@@ -12,8 +12,8 @@ class LogsController < ApplicationController
     case params[:log_type]
     when "overmind"
       parse_overmind
-    when "json"
-      parse_json
+    when "json", "url"
+      parse_json_or_url
     end
 
     head :no_content
@@ -45,7 +45,7 @@ class LogsController < ApplicationController
     end
   end
 
-  def parse_json
+  def parse_json_or_url
     new_log = GenericLog.new(
       'source' => params[:source].strip,
       'log' =>  params[:log],
