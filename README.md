@@ -10,7 +10,7 @@ A local logging solution.
 <details>
   <summary>Dark Mode</summary>
 
-  <img src="https://user-images.githubusercontent.com/3074765/79073919-43687500-7cb7-11ea-9691-8750e12c6bcf.png" alt="Dark Mode Screenshot"
+  <img src="https://user-images.githubusercontent.com/3074765/79073919-43687500-7cb7-11ea-9691-8750e12c6bcf.png" alt="Dark Mode Screenshot">
 
 </details>
 
