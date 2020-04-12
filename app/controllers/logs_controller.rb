@@ -47,9 +47,9 @@ class LogsController < ApplicationController
 
   def parse_json_or_url
     new_log = GenericLog.new(
-      'source' => params[:source].strip,
+      'source' => params[:source]&.strip,
       'log' =>  params[:log],
-      'application' => params[:application].strip
+      'application' => params[:application]&.strip
     )
     LOG_REPO.save(new_log)
   end
