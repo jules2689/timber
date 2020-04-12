@@ -56,6 +56,8 @@ RUN bin/rails assets:precompile
 # Run the app
 ADD bin/entrypoint.sh /app/bin/entrypoint.sh
 RUN sudo chmod +x /app/bin/entrypoint.sh
+ARG secret_key_base=06a4324b503986b092979b00398
+ENV SECRET_KEY_BASE=$secret_key_base
 ENV FULL_LOGGING 1
 ENV RAILS_SERVE_STATIC_FILES 1
 ENV SETUP_ES 1
