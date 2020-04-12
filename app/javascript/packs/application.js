@@ -7,6 +7,8 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 
+import "../channels"
+
 import "@primer/css/index.scss";
 import "../../assets/stylesheets/application.scss"
 
@@ -36,6 +38,8 @@ function getCookie(cname) {
   return "";
 }
 
+window.autoLoadLogs = getCookie("autoLoadLogs") === "true";
+
 document.addEventListener("turbolinks:load", function() {
   // Dark Mode
   if (getCookie('timberDarkMode') === 'true') {
@@ -52,6 +56,18 @@ document.addEventListener("turbolinks:load", function() {
     const darkMode = $('body').hasClass('dark')
     document.cookie = `timberDarkMode=${darkMode}`
     document.getElementById('darkSwitch').checked = darkMode
+  })
+
+  // Auto Load Logs
+  if (getCookie('autoLoadLogs') === 'true') {
+    document.getElementById('autoLoadLogs').checked = true
+  } else {
+    document.getElementById('autoLoadLogs').checked = false
+  }
+
+  $('#autoLoadLogs').on('click', function(){
+    window.autoLoadLogs = !window.autoLoadLogs;
+    document.cookie = `autoLoadLogs=${window.autoLoadLogs}`
   })
 
   // ANSI Escaping

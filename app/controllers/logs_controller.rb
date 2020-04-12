@@ -9,11 +9,19 @@ class LogsController < ApplicationController
   end
 
   def create
-    case params[:log_type]
+    log = case params[:log_type]
     when "overmind"
       parse_overmind
     when "json", "url"
       parse_json_or_url
+    end
+
+    if log
+      ActionCable.server.broadcast(
+        "logs",
+        log: log,
+        partial: render(partial: "logs/log", locals: { log: log })
+      )
     end
 
     head :no_content
@@ -42,7 +50,10 @@ class LogsController < ApplicationController
         'tags' => tags,
       )
       LOG_REPO.save(new_log)
+      return new_log
     end
+
+    nil
   end
 
   def parse_json_or_url
@@ -52,6 +63,7 @@ class LogsController < ApplicationController
       'application' => params[:application]&.strip
     )
     LOG_REPO.save(new_log)
+    new_log
   end
 
   def set_aggregations

@@ -1,9 +1,9 @@
 class GenericLog
-  attr_reader :attributes
+  attr_reader :attributes, :timestamp
 
   def initialize(attributes={})
     @attributes = attributes
-    @timestamp = Time.new
+    @timestamp = Time.now.utc
   end
 
   def type

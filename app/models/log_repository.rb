@@ -10,9 +10,9 @@ class LogRepository
 
   settings number_of_shards: 1 do
     mapping do
-      indexes :source, type: :text, fielddata: true
-      indexes :application, type: :text, fielddata: true
-      indexes :log, type: :text
+      indexes :source, type: :text, analyzer: 'standard', fielddata: true
+      indexes :application, type: :text, analyzer: 'standard', fielddata: true
+      indexes :log, type: :text, analyzer: 'standard'
       indexes :timestamp, type: :date
       indexes :id, type: :long
     end

@@ -24,4 +24,11 @@
   <button class="btn" type="submit">Search</button>
 </form>
 
-<%= render "search_help" %>
+<div class="mt-2 d-flex flex-justify-between">
+  <%= render "search_help" %>
+
+  <label class="switch tooltipped tooltipped-sw" aria-label="Auto-load new logs as they come in">
+    <input <% if cookies["autoLoadLogs"] == "true" %>checked=""<% end %> type="checkbox" id="autoLoadLogs">
+    <span class="slider round"></span>
+  </label>
+</div>

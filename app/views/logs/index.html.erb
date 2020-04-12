@@ -3,15 +3,7 @@
 <div class="Box mt-5 Box--condensed" id="search-results">
   <ul>
   <% @logs.each do |log| %>
-    <li class="Box-row Box-row--hover-gray d-flex">
-      <div class="mr-2" style="display: inline; flex-shrink: 0">
-        <span title="Label: timestamp" class="mb-1 Label Label--gray"><%= DateTime.parse(log.attributes["timestamp"]).to_formatted_s(:rfc822) %></span>
-        <br>
-        <a href="<%= search_url(application: log.attributes["application"]) %>" title="Label: source" class="app-<%= log.attributes["application"].downcase %> Label Label--gray"><%= log.attributes["application"] %></a>
-        <a href="<%= search_url(source: log.attributes["source"]) %>" title="Label: source" class="source-<%= log.attributes["source"].downcase %> Label Label--gray"><%= log.attributes["source"] %></a>
-      </div>
-      <div><pre class="ansi-up" style="display: inline"><%= parse_log(log.attributes["log"]) %></pre></div>
-    </li>
+    <%= render "log", log: log %>
   <% end %>
   </ul>
 </div>
