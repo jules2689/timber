@@ -10,14 +10,14 @@
         placeholder="Time Range"
         aria-label="Time Range" />
   <select name="application" class="form-select mr-3" aria-label="Select an Application">
-    <option value="">Application</option>
-    <% %w(slack).each do |app| %>
+    <option value="">Pick an App</option>
+    <% @aggregations["applications"].each do |app| %>
     <option <% if app == params[:application] %>selected<% end %> value="<%= app %>"><%= app %></option>
     <% end %>
   </select>
   <select name="source" class="form-select mr-3" aria-label="Select a Source">
-    <option value="">Source</option>
-    <% %w(web tunnel).each do |source| %>
+    <option class="text-gray-300" value="">Pick a Source</option>
+    <% @aggregations["sources"].each do |source| %>
     <option <% if source == params[:source] %>selected<% end %> value="<%= source %>"><%= source %></option>
     <% end %>
   </select>
