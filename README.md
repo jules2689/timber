@@ -14,15 +14,16 @@ A local logging solution.
 
 </details>
 
-## To Run
+## Getting Started
 
 1. `docker pull docker.pkg.github.com/jules2689/timber/timber:latest`
 2. `docker run  -p 6778:3000 --name timber -v es-data:/var/lib/elasticsearch -t docker.pkg.github.com/jules2689/timber:latest`
 3. Wait for it to launch, including Elasticsearch, then run this test command: `curl -X POST "http://localhost:6778/logs?log_type=url&application=test&log=test&source=test"`. This should result in a test log in the application.
+4. Launch https://localhost:6778 to see the log come in
 
 _Note:_ The `-v` will mount in the `es-data` volume mount on your local machine. This will allow you to save Elasticsearch indices and data between runs of Docker.
 
-## Data Sources
+### Conecting to Logging Sources
 
 ### Overmind
 
@@ -40,7 +41,7 @@ done
 
 Then call `overmind echo | /path/to/file APP_NAME`, replacing `APP_NAME` with the name of your application.
 
-### json
+### JSON
 
 Timber can support logs in JSON format too. As an example, this bash file should send logs much like the Overmind example:
 
