@@ -4,7 +4,7 @@ class LogsController < ApplicationController
 
   def index
     search_params = parse_query(params)
-    puts JSON.pretty_generate(search_params) if ENV['FULL_LOGGING']
+    logger.debug JSON.pretty_generate(search_params)
     @logs = LOG_REPO.search(search_params)
   end
 
@@ -12,6 +12,8 @@ class LogsController < ApplicationController
     case params[:log_type]
     when "overmind"
       parse_overmind
+    when "json"
+      parse_json
     end
 
     head :no_content
@@ -21,7 +23,7 @@ class LogsController < ApplicationController
 
   def parse_overmind
     original_log = request.body.read
-    puts original_log if ENV['FULL_LOGGING']
+    logger.debug original_log
 
     # Parse the log
     log = original_log.gsub(/\e\]0;/, '')
@@ -41,6 +43,15 @@ class LogsController < ApplicationController
       )
       LOG_REPO.save(new_log)
     end
+  end
+
+  def parse_json
+    new_log = GenericLog.new(
+      'source' => params[:source].strip,
+      'log' =>  params[:log],
+      'application' => params[:application].strip
+    )
+    LOG_REPO.save(new_log)
   end
 
   def set_aggregations

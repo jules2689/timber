@@ -1,0 +1,21 @@
+path:
+  data: /app/data
+  logs: /app/log
+  plugins: /app/plugins
+  work: /app/work
+
+# Cluster information
+cluster.name: timber
+node.name: timber
+
+# Index settings
+action.auto_create_index: true
+
+# Turn off swap to get a big speed increase.  This will prevent the ES server
+# from swapping memory on the node. https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration.html#setup-configuration-memory
+bootstrap.mlockall: true
+
+# Disable deleting all indices from the api.
+action.disable_delete_all_indices: true
+
+indices.cluster.send_refresh_mapping: false

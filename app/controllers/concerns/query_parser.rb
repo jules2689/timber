@@ -24,7 +24,7 @@ module QueryParser
 
   def time_query(params)
     time_query = nil
-    if params[:time_range]
+    if params[:time_range].present?
       from_time, to_time = params[:time_range].split(" - ")
       time_query = {
         range: {

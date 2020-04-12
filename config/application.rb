@@ -15,7 +15,9 @@ module Timber
       config.lograge.enabled = true
       config.lograge.custom_payload do |controller|
         if controller.params[:application]
-          { app: controller.params[:application] }
+          {
+            app: controller.params[:application]
+          }
         end
       end
     end

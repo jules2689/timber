@@ -1,32 +1,63 @@
-FROM ruby:2.6.6
+FROM ruby:2.6.6 as source
 
 ENV RAILS_ENV production
-COPY . /app
 WORKDIR /app
 
-# Java
-RUN apt-get update && \
-    apt-get install -y default-jdk && \
-    apt-get clean;
+# Specify non-root user
+RUN apt-get update && apt-get install sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
+USER docker
+RUN sudo chown -R docker:docker /app
 
-# ElasticSearch
-RUN apt install apt-transport-https
-RUN wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
-RUN sh -c 'echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" > /etc/apt/sources.list.d/elastic-6.x.list'
-RUN apt update
-RUN apt install elasticsearch
+# Install JDK
+RUN sudo apt-get install -y default-jdk
+RUN java --version
+ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
 
 # Node & Yarn
-RUN curl https://deb.nodesource.com/setup_12.x | bash
-RUN curl https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get install -y nodejs yarn
+RUN curl https://deb.nodesource.com/setup_12.x | sudo bash
+RUN curl https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+RUN sudo apt-get update && sudo apt-get install -y nodejs yarn
 
-# Dependencies
+# Install Elasticsearch
+RUN wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+RUN echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-6.x.list
+RUN sudo apt-get update && sudo apt-get install -y elasticsearch
+
+# Copy Dependency Definitions
+COPY Gemfile /app/Gemfile
+COPY Gemfile.lock /app/Gemfile.lock
+COPY package.json /app/package.json
+COPY yarn.lock /app/yarn.lock
+
+# Install Dependencies
 RUN gem install bundler
 RUN bundle config set deployment 'true'
-RUN bundle install --without development test
+RUN bundle config set without 'development test'
+RUN bundle install
 RUN yarn install
 
-EXPOSE 6778
-ENTRYPOINT ./bin/entrypoint.sh
+# Copy over App, Config, & Generate Assets
+COPY . /app
+RUN sudo rm -rf /app/tmp/*
+
+# Fix Elasticsearch
+RUN sudo chown -R docker:docker /etc/default/elasticsearch
+RUN sudo chown -R docker:docker /etc/elasticsearch
+RUN sudo chown -R docker:docker /var/log/elasticsearch
+RUN sudo chown -R docker:docker /var/lib/elasticsearch
+
+# Make sure we own /app and compile assets
+RUN sudo chown -R docker:docker /app
+RUN bin/rails assets:precompile
+
+# Run the app
+ADD bin/entrypoint.sh /app/bin/entrypoint.sh
+RUN sudo chmod +x /app/bin/entrypoint.sh
+ENV FULL_LOGGING 1
+ENV RAILS_SERVE_STATIC_FILES 1
+ENV SETUP_ES 1
+EXPOSE 3000
+ENTRYPOINT ["/app/bin/entrypoint.sh"]
