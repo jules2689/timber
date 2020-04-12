@@ -5,6 +5,15 @@ A local logging solution.
 - Timber is a project that consumes simple text logs by piping the output of a local project.
 - It allows for filtering using Elasticsearch querying, and can help you find logs by application, source in the app (assets, web, etc), and by time.
 
+![Standard Mode](https://user-images.githubusercontent.com/3074765/79073918-3c416700-7cb7-11ea-81d2-73e71cdbf03d.png)
+
+<details>
+  <summary>Dark Mode</summary>
+
+  <img src="https://user-images.githubusercontent.com/3074765/79073919-43687500-7cb7-11ea-9691-8750e12c6bcf.png" alt="Dark Mode Screenshot"
+
+</details>
+
 ## To Run
 
 1. `docker pull docker.pkg.github.com/jules2689/timber/timber:latest`
