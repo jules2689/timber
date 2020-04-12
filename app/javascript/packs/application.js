@@ -79,19 +79,14 @@ document.addEventListener("turbolinks:load", function() {
   }
 
   // Date Picker
-
+  const dateFormat = 'YYYY-MM-DDTHH:mm:ssZ'
   $('.js-date-range-picker').each(function(){
     const picker = $(this)
-    const startDate = picker.data('startdate') || moment().subtract(15, 'minutes')
-    const endDate = picker.data('enddate') || moment()
     picker.daterangepicker({
       timePicker: true,
       timePickerSeconds: true,
-      startDate: startDate,
-      endDate: endDate,
-      locale: {
-        format: 'YYYY-MM-DDTHH:mm:ssZ'
-      },
+      autoUpdateInput: false,
+      locale: { format: dateFormat, cancelLabel: 'Clear' },
       ranges: {
         'Last 5 minutes': [moment().subtract(5, 'minutes'), moment()],
         'Last 15 minutes': [moment().subtract(15, 'minutes'), moment()],
@@ -103,5 +98,20 @@ document.addEventListener("turbolinks:load", function() {
         'Last 30 Days': [moment().subtract(29, 'days'), moment()],
       }
     })
+
+    picker.on('apply.daterangepicker', function(ev, picker) {
+      const val = picker.startDate.format(dateFormat) + ' - ' + picker.endDate.format(dateFormat)
+      $(this).val(val);
+    });
+
+    picker.on('cancel.daterangepicker', function(ev, picker) {
+      $(this).val('');
+    });
+
+    const startDate = picker.data('startdate')
+    if (startDate && startDate !== '') picker.startDate = startDate
+
+    const endDate = picker.data('enddate')
+    if (endDate && endDate !== '') picker.endDate = endDate
   })
 })

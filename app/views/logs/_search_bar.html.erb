@@ -4,6 +4,8 @@
         <% if params[:time_range] %>
           data-startdate="<%= params[:time_range].split(" - ").first %>"
           data-enddate="<%= params[:time_range].split(" - ").last %>"
+        <% else %>
+          value=""
         <% end %>
         class="form-control mr-3 js-date-range-picker flex-1"
         type="text"
