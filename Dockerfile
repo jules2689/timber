@@ -34,8 +34,10 @@ COPY yarn.lock /app/yarn.lock
 
 # Install Dependencies
 RUN gem install bundler
+RUN bundle config --local build.sassc --disable-march-tune-native
 RUN bundle config set deployment 'true'
 RUN bundle config set without 'development test'
+ENV BUNDLE_BUILD__SASSC=--disable-march-tune-native
 RUN bundle install
 RUN yarn install
 

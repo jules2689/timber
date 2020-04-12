@@ -177,7 +177,7 @@ GEM
     rubyzip (2.3.0)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
-    sassc (2.2.1)
+    sassc (2.1.0)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
       railties (>= 4.0.0)
@@ -244,6 +244,7 @@ DEPENDENCIES
   puma (~> 4.1)
   rails (~> 6.0.2, >= 6.0.2.2)
   sass-rails (>= 6)
+  sassc (~> 2.1.0)
   selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)
@@ -254,9 +255,6 @@ DEPENDENCIES
   web-console (>= 3.3.0)
   webdrivers
   webpacker (~> 4.0)
-
-RUBY VERSION
-   ruby 2.6.5p114
 
 BUNDLED WITH
    2.0.2
