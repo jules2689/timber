@@ -25,5 +25,8 @@ jobs:
         run: |
           docker login docker.pkg.github.com -u publisher -p "${GITHUB_PACKAGE_REGISTRY_TOKEN}"
           docker push docker.pkg.github.com/${LOWER_REPO}/${CONTAINER_NAME}:latest
+          # Also push by SHA
+          docker tag docker.pkg.github.com/${LOWER_REPO}/${CONTAINER_NAME}:latest docker.pkg.github.com/${LOWER_REPO}/${CONTAINER_NAME}:${{github.sha}}
+          docker push docker.pkg.github.com/${LOWER_REPO}/${CONTAINER_NAME}:${{github.sha}}
         env:
           GITHUB_PACKAGE_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}

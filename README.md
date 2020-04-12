@@ -3,7 +3,16 @@
 A local logging solution.
 
 - Timber is a project that consumes simple text logs by piping the output of a local project.
-- It allows for filtering using ElasticSearch querying, and can help you find logs by application, source in the app (assets, web, etc), and by time.
+- It allows for filtering using Elasticsearch querying, and can help you find logs by application, source in the app (assets, web, etc), and by time.
+
+## To Run
+
+1. `docker pull docker.pkg.github.com/jules2689/timber/timber:latest`
+2. `docker run  -p 6778:3000 --name timber -v es-data:/var/lib/elasticsearch -t docker.pkg.github.com/jules2689/timber:latest`
+
+_Note:_ The `-v` will mount in the `es-data` volume mount on your local machine. This will allow you to save Elasticsearch indices and data between runs of Docker.
+
+## Data Sources
 
 ### Overmind
 
@@ -19,11 +28,11 @@ while read var; do
 done
 ```
 
-Then call `overmind echo | /path/to/file APP_NAME`, replacing `APP_NAME`.
+Then call `overmind echo | /path/to/file APP_NAME`, replacing `APP_NAME` with the name of your application.
 
 ### json
 
-Timber can support logs from `overmind` applications by using the `overmind echo` feature. To send logs, create a bash file like this one:
+Timber can support logs in JSON format too. As an example, this bash file should send logs much like the Overmind example:
 
 ```bash
 #!/usr/bin/env sh

@@ -57,11 +57,13 @@ ENV SECRET_KEY_BASE=$secret_key_base
 RUN sudo chown -R docker:docker /app
 RUN bin/rails assets:precompile
 
-# Run the app
+# Setup and Run the App
+RUN sudo apt-get install lsof
 ADD bin/entrypoint.sh /app/bin/entrypoint.sh
 RUN sudo chmod +x /app/bin/entrypoint.sh
 ENV FULL_LOGGING 1
 ENV RAILS_SERVE_STATIC_FILES 1
 ENV SETUP_ES 1
+ENV PORT 3000
 EXPOSE 3000
 ENTRYPOINT ["/app/bin/entrypoint.sh"]
