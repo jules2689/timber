@@ -9,7 +9,7 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body <% if cookies[:timberDarkMode] == "true" %>class="dark"<% end %>>
     <%= render "layouts/header" %>
     <div class="p-5">
       <%= yield %>
