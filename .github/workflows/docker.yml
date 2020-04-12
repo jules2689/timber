@@ -18,7 +18,7 @@ jobs:
         run: print("::set-env name=LOWER_REPO::{}".format('${{github.repository}}'.lower()))
       - name: Build Docker
         run: |
-          docker build -f docker/Dockerfile -t docker.pkg.github.com/${LOWER_REPO}/${CONTAINER_NAME}:latest .
+          docker build -t docker.pkg.github.com/${LOWER_REPO}/${CONTAINER_NAME}:latest .
       - name: Push the image to GPR
         run: |
           docker login docker.pkg.github.com -u publisher -p "${GITHUB_PACKAGE_REGISTRY_TOKEN}"
