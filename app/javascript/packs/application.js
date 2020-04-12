@@ -21,6 +21,7 @@ var AU = require('ansi_up');
 var ansi_up = new AU.default;
 ansi_up.escape_for_html = false;
 ansi_up.use_classes = true;
+window.ansi_up = ansi_up;
 
 function getCookie(cname) {
   var name = cname + "=";

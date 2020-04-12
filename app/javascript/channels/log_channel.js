@@ -10,7 +10,8 @@ consumer.subscriptions.create("LogChannel", {
 
     // Converts to real HTML Nodes
     var div = document.createElement('div');
-    div.innerHTML = data.partial.trim();
+    div.innerHTML = window.ansi_up.ansi_to_html(data.partial.trim());
+
     searchList.prepend(div.firstChild)
   },
 

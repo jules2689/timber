@@ -42,10 +42,10 @@ class LogsController < ApplicationController
   
     # Save the log
     if source != "echo" && log&.strip&.present?
-      tags = Strings::ANSI.sanitize(log).scan(/\[(\w+)\]/).map(&:first)
+      tags = Strings::ANSI.sanitize(log).scan(/\[(.*?)\]/).map(&:first)
       new_log = GenericLog.new(
         'source' => source.strip,
-        'log' =>  log.gsub(/(\[\w+\])/, '').strip,
+        'log' =>  log.gsub(/(\[.*?\])/, '').strip,
         'application' => params[:application].strip,
         'tags' => tags,
       )
