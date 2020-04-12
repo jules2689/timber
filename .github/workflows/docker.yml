@@ -8,6 +8,7 @@ jobs:
   build_and_push_docker:
     runs-on: ubuntu-latest
     name: Build and Publish Docker Image
+    timeout-minutes: 20
     steps:
       - name: Checkout sources
         uses: actions/checkout@v1
