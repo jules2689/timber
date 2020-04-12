@@ -1,24 +1,22 @@
-# README
+# Timber
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A local logging solution.
 
-Things you may want to cover:
+- Timber is a project that consumes simple text logs by piping the output of a local project.
+- It allows for filtering using ElasticSearch querying, and can help you find logs by application, source in the app (assets, web, etc), and by time.
 
-* Ruby version
+### Overmind
 
-* System dependencies
+Timber can support logs from `overmind` applications by using the `overmind echo` feature. To send logs, create a bash file like this one:
 
-* Configuration
+```bash
+#!/usr/bin/env sh
 
-* Database creation
+application=$1
 
-* Database initialization
+while read var; do
+  curl -H "Content-Type: application/text" -X POST -d "$var" "http://localhost:6778/logs?log_type=overmind&application=$application" >/dev/null 2>&1
+done
+```
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Then call `overmind echo | /path/to/file APP_NAME`, replacing `APP_NAME`.

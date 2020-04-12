@@ -9,6 +9,17 @@ class LogsController < ApplicationController
   end
 
   def create
+    case params[:log_type]
+    when "overmind"
+      parse_overmind
+    end
+
+    head :no_content
+  end
+
+  private
+
+  def parse_overmind
     original_log = request.body.read
     puts original_log if ENV['FULL_LOGGING']
 
@@ -30,11 +41,7 @@ class LogsController < ApplicationController
       )
       LOG_REPO.save(new_log)
     end
-
-    head :no_content
   end
-
-  private
 
   def set_aggregations
     @aggregations ||= begin
