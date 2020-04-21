@@ -52,6 +52,7 @@ RUN sudo chown -R docker:docker /var/log/elasticsearch
 RUN sudo chown -R docker:docker /var/lib/elasticsearch
 
 # Make sure we own /app and compile assets
+# Secret Key is for Rails, this is only a default for local work. Published package uses open SSL to randomize a secure token.
 ARG secret_key_base=06a4324b503986b092979b00398
 ENV SECRET_KEY_BASE=$secret_key_base
 RUN sudo chown -R docker:docker /app
